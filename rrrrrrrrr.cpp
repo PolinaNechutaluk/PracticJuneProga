@@ -63,7 +63,7 @@ public:
     }
 
     Dish* getDish(int index) const {
-        if (index < 0  index >= static_cast<int>(items.size()))
+        if (index < 0 || index >= static_cast<int>(items.size()))
             return nullptr;
         return items[index];
     }
@@ -112,7 +112,7 @@ public:
             cin >> choice;
             if (choice == 0) break;
 
-            if (choice < 1  choice > static_cast<int>(menu.size())) {
+            if (choice < 1 || choice > static_cast<int>(menu.size())) {
                 cout << "Неправильний номер, спробуйте знову." << endl;
                 continue;
             }
@@ -164,9 +164,9 @@ public:
         cout << "\n--- Інспекція каси ---" << endl;
         cout << "Каса містить: " << fixed << setprecision(2) << seller.getMoney() << " грн" << endl;
         if (seller.wasDishonest()) {
-            cout << "Виявлено махінації! Вкрадено: " << seller.getStolenMoney() << " грн!" << endl;
+            cout << " Виявлено махінації! Вкрадено: " << seller.getStolenMoney() << " грн!" << endl;
         } else {
-            cout << "Все чесно. Порушень не виявлено." << endl;
+            cout << " Все чесно. Порушень не виявлено." << endl;
         }
     }
 };
@@ -207,5 +207,5 @@ int main() {
     // Інспекція наприкінці дня
     inspector.audit(seller);
 
-    return 0;
+return 0;
 }
