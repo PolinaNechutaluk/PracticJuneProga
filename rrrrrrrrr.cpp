@@ -5,7 +5,7 @@
 
 using namespace std;
 
-// ===== Класи =====
+// ===== РљР»Р°СЃРё =====
 
 class Dish {
 protected:
@@ -27,7 +27,7 @@ public:
     MainCourse(string name, double price) : Dish(name, price) {}
 
     void print() const override {
-        cout << "Основна страва: " << name << " - " << fixed << setprecision(2) << price << " грн" << endl;
+        cout << "РћСЃРЅРѕРІРЅР° СЃС‚СЂР°РІР°: " << name << " - " << fixed << setprecision(2) << price << " РіСЂРЅ" << endl;
     }
 };
 
@@ -36,7 +36,7 @@ public:
     Drink(string name, double price) : Dish(name, price) {}
 
     void print() const override {
-        cout << "Напій: " << name << " - " << fixed << setprecision(2) << price << " грн" << endl;
+        cout << "РќР°РїС–Р№: " << name << " - " << fixed << setprecision(2) << price << " РіСЂРЅ" << endl;
     }
 };
 
@@ -55,7 +55,7 @@ public:
     }
 
     void printMenu() const {
-        cout << "----- Меню -----" << endl;
+        cout << "----- РњРµРЅСЋ -----" << endl;
         for (size_t i = 0; i < items.size(); ++i) {
             cout << i + 1 << ". ";
             items[i]->print();
@@ -63,7 +63,7 @@ public:
     }
 
     Dish* getDish(int index) const {
-        if (index < 0 || index >= static_cast<int>(items.size()))
+        if (index < 0  index >= static_cast<int>(items.size()))
             return nullptr;
         return items[index];
     }
@@ -104,39 +104,39 @@ public:
         int choice, quantity;
         double total = 0;
 
-        cout << "\nКасир: Вітаю, " << visitor.getName() << "! Оберіть номер страви з меню (0 - завершити):\n";
+        cout << "\nРљР°СЃРёСЂ: Р’С–С‚Р°СЋ, " << visitor.getName() << "! РћР±РµСЂС–С‚СЊ РЅРѕРјРµСЂ СЃС‚СЂР°РІРё Р· РјРµРЅСЋ (0 - Р·Р°РІРµСЂС€РёС‚Рё):\n";
         menu.printMenu();
 
         while (true) {
-            cout << "\nВаш вибір (0 - завершити): ";
+            cout << "\nР’Р°С€ РІРёР±С–СЂ (0 - Р·Р°РІРµСЂС€РёС‚Рё): ";
             cin >> choice;
             if (choice == 0) break;
 
-            if (choice < 1 || choice > static_cast<int>(menu.size())) {
-                cout << "Неправильний номер, спробуйте знову." << endl;
+            if (choice < 1  choice > static_cast<int>(menu.size())) {
+                cout << "РќРµРїСЂР°РІРёР»СЊРЅРёР№ РЅРѕРјРµСЂ, СЃРїСЂРѕР±СѓР№С‚Рµ Р·РЅРѕРІСѓ." << endl;
                 continue;
             }
 
-            cout << "Кількість: ";
+            cout << "РљС–Р»СЊРєС–СЃС‚СЊ: ";
             cin >> quantity;
 
             Dish* selected = menu.getDish(choice - 1);
             double cost = selected->getPrice() * quantity;
 
             if (!visitor.canAfford(total + cost)) {
-                cout << "Недостатньо коштів. Спробуйте іншу страву або меншу кількість." << endl;
+                cout << "РќРµРґРѕСЃС‚Р°С‚РЅСЊРѕ РєРѕС€С‚С–РІ. РЎРїСЂРѕР±СѓР№С‚Рµ С–РЅС€Сѓ СЃС‚СЂР°РІСѓ Р°Р±Рѕ РјРµРЅС€Сѓ РєС–Р»СЊРєС–СЃС‚СЊ." << endl;
                 continue;
             }
 
             total += cost;
-            cout << "Додано: " << selected->getName() << " x" << quantity << " = " << cost << " грн" << endl;
+            cout << "Р”РѕРґР°РЅРѕ: " << selected->getName() << " x" << quantity << " = " << cost << " РіСЂРЅ" << endl;
         }
 
         if (total > 0) {
-            cout << "\nСума до сплати: " << fixed << setprecision(2) << total << " грн\n";
+            cout << "\nРЎСѓРјР° РґРѕ СЃРїР»Р°С‚Рё: " << fixed << setprecision(2) << total << " РіСЂРЅ\n";
 
             int cheatChoice;
-            cout << "Чи буде касир красти гроші?\n0 - Ні, 1 - Так: ";
+            cout << "Р§Рё Р±СѓРґРµ РєР°СЃРёСЂ РєСЂР°СЃС‚Рё РіСЂРѕС€С–?\n0 - РќС–, 1 - РўР°Рє: ";
             cin >> cheatChoice;
 
             if (cheatChoice == 1) {
@@ -144,11 +144,10 @@ public:
                 money += total - stealAmount;
                 stolenMoney += stealAmount;
                 wasEverDishonest = true;
-                cout << "Касир вкрав " << fixed << setprecision(2) << stealAmount << " грн" << endl;
-            }
-            else {
+                cout << "РљР°СЃРёСЂ РІРєСЂР°РІ " << fixed << setprecision(2) << stealAmount << " РіСЂРЅ " << endl;
+            } else {
                 money += total;
-                cout << "Касир провів платіж чесно." << endl;
+                cout << "РљР°СЃРёСЂ РїСЂРѕРІС–РІ РїР»Р°С‚С–Р¶ С‡РµСЃРЅРѕ." << endl;
             }
 
             visitor.pay(total);
@@ -159,17 +158,15 @@ public:
     double getStolenMoney() const { return stolenMoney; }
     bool wasDishonest() const { return wasEverDishonest; }
 };
-
 class Inspector {
 public:
     void audit(const Seller& seller) const {
-        cout << "\n--- Інспекція каси ---" << endl;
-        cout << "Каса містить: " << fixed << setprecision(2) << seller.getMoney() << " грн" << endl;
+        cout << "\n--- Р†РЅСЃРїРµРєС†С–СЏ РєР°СЃРё ---" << endl;
+        cout << "РљР°СЃР° РјС–СЃС‚РёС‚СЊ: " << fixed << setprecision(2) << seller.getMoney() << " РіСЂРЅ" << endl;
         if (seller.wasDishonest()) {
-            cout << " Виявлено махінації! Вкрадено: " << seller.getStolenMoney() << " грн!" << endl;
-        }
-        else {
-            cout << " Все чесно. Порушень не виявлено." << endl;
+            cout << "Р’РёСЏРІР»РµРЅРѕ РјР°С…С–РЅР°С†С–С—! Р’РєСЂР°РґРµРЅРѕ: " << seller.getStolenMoney() << " РіСЂРЅ!" << endl;
+        } else {
+            cout << "Р’СЃРµ С‡РµСЃРЅРѕ. РџРѕСЂСѓС€РµРЅСЊ РЅРµ РІРёСЏРІР»РµРЅРѕ." << endl;
         }
     }
 };
@@ -178,10 +175,10 @@ public:
 
 int main() {
     Menu menu;
-    menu.addItem(new MainCourse("Борщ", 60));
-    menu.addItem(new MainCourse("Котлета з пюре", 75));
-    menu.addItem(new Drink("Компот", 25));
-    menu.addItem(new Drink("Чай з лимоном", 20));
+    menu.addItem(new MainCourse("Р‘РѕСЂС‰", 60));
+    menu.addItem(new MainCourse("РљРѕС‚Р»РµС‚Р° Р· РїСЋСЂРµ", 75));
+    menu.addItem(new Drink("РљРѕРјРїРѕС‚", 25));
+    menu.addItem(new Drink("Р§Р°Р№ Р· Р»РёРјРѕРЅРѕРј", 20));
 
     Seller seller;
     Inspector inspector;
@@ -191,23 +188,23 @@ int main() {
         string name;
         double balance;
 
-        cout << "Введіть ім’я клієнта: ";
+        cout << "Р’РІРµРґС–С‚СЊ С–РјвЂ™СЏ РєР»С–С”РЅС‚Р°: ";
         getline(cin, name);
-        cout << "Введіть суму грошей клієнта: ";
+        cout << "Р’РІРµРґС–С‚СЊ СЃСѓРјСѓ РіСЂРѕС€РµР№ РєР»С–С”РЅС‚Р°: ";
         cin >> balance;
 
         Visitor visitor(name, balance);
         seller.serveCustomer(menu, visitor);
 
         int next;
-        cout << "\nЧи прийде ще один клієнт? (1 - так, 0 - ні): ";
+        cout << "\nР§Рё РїСЂРёР№РґРµ С‰Рµ РѕРґРёРЅ РєР»С–С”РЅС‚? (1 - С‚Р°Рє, 0 - РЅС–): ";
         cin >> next;
         if (next != 1) break;
-
+        
         cin.ignore();
     }
 
-    // Інспекція наприкінці дня
+    // Р†РЅСЃРїРµРєС†С–СЏ РЅР°РїСЂРёРєС–РЅС†С– РґРЅСЏ
     inspector.audit(seller);
 
     return 0;
